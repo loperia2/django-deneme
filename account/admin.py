@@ -4,7 +4,6 @@ from django.contrib.auth.admin import UserAdmin
 from account.models import CustomUserModel
 
 class CustomAdmin(UserAdmin):
-    model = CustomUserModel
 
     fieldsets= UserAdmin.fieldsets + (
         ('Avatar Changing Field', {

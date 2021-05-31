@@ -4,6 +4,8 @@ from deneme.models import categoryModel
 from deneme.models import articlesModel
 from deneme.models import commentModel
 
+
+
 admin.site.register(categoryModel)
 
 class articlesAdmin(admin.ModelAdmin):

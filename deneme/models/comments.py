@@ -1,14 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from deneme.models import articlesModel
+from deneme.abstract_models import DateAbstractModel
 
-class commentModel(models.Model):
+class commentModel(DateAbstractModel):
     
     writer=models.ForeignKey('account.CustomUserModel', on_delete=models.CASCADE, related_name='comment')
     article= models.ForeignKey(articlesModel, on_delete=models.CASCADE, related_name='comments')
     comment= models.TextField()
-    create_Date=models.DateTimeField(auto_now_add=True)
-    edit_Date=models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'comment'
