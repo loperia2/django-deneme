@@ -4,7 +4,7 @@ from deneme.models import articlesModel
 
 class commentModel(models.Model):
     
-    writer=models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment')
+    writer=models.ForeignKey('account.CustomUserModel', on_delete=models.CASCADE, related_name='comment')
     article= models.ForeignKey(articlesModel, on_delete=models.CASCADE, related_name='comments')
     comment= models.TextField()
     create_Date=models.DateTimeField(auto_now_add=True)
