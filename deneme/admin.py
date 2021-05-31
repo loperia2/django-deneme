@@ -1,3 +1,4 @@
+from deneme.models.contact import contactModel
 from django.contrib import admin
 from deneme.models import categoryModel
 from deneme.models import articlesModel
@@ -22,3 +23,13 @@ class commentAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(commentModel, commentAdmin)
+
+class contactAdmin(admin.ModelAdmin):
+    list_display=(
+        'email','create_Date',
+    )
+    search_fields=(
+        'email',
+    )
+
+admin.site.register(contactModel, contactAdmin)
