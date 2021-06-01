@@ -1,14 +1,21 @@
+
 <div class="col-sm-3">
     <div class="card mb-3">
         <div class="card-header">
           Menu
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Edit Profile</li>
-          <li class="list-group-item">Change Password</li>
-          <li class="list-group-item">My Articles</li>
-          <li class="list-group-item">Add Article</li>
-          <li class="list-group-item">Log Out</li>
-        </ul>
+          {%if request.user.is_authenticated %}
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Edit Profile</li>
+              <li class="list-group-item">Change Password</li>
+              <li class="list-group-item">
+                <a href="{% url 'myarticles' %}">My Articles</a>
+              </li>
+              <li class="list-group-item">Add Article</li>
+              <li class="list-group-item">Log Out</li>
+            </ul>
+          {%else%}
+            Login Form
+          {%endif%}
       </div>
 </div> 
