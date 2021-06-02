@@ -15,9 +15,12 @@
     {% for article in articles%}
     <tr>
       <th scope="row">{{article.id}}</th>
-      <td>{{article.title}}</td>
+      <td><a href="{% url 'description' descriptionSlug=article.slug %}">{{article.title}}</a></td>
       <td>{{article.edit_Date}}{</td>
-      <td>Coming Soon</td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'editArticle' editSlug=article.slug%}">Edit</a>
+        <a class="btn btn-danger" href="{% url 'deleteArticle' deleteSlug=article.slug%}">Delete</a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

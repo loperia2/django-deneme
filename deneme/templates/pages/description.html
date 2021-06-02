@@ -14,7 +14,17 @@
       <div class="card-body">
         <h5 class="card-title">{{article.title}}</h5>
         <p class="card-text">{{article.content|safe}}</p>
-        <p class="card-text"><small class="text-muted">{{article.edit_Date|timesince}}</small></p>
+        <p class="card-text">
+          <small class="text-muted">
+            {{article.edit_Date|timesince}}
+          </small>
+          <p >
+            {%if request.user == article.writer %}
+              <a class="btn btn-primary" href="{% url 'editArticle' editSlug=article.slug%}">Edit</a>
+              <a class="btn btn-danger" href="{% url 'deleteArticle' deleteSlug=article.slug%}">Delete</a>
+            {% endif %}
+          </p>
+        </p>
       </div>
     </div>
   </div>
