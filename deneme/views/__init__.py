@@ -6,3 +6,4 @@ from .description import description
 from .addArticle import addArticle
 from .editArticle import editArticle
 from .deleteArticle import deleteArticle
+from .deleteComment import deleteComment
