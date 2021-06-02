@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path,include
-from deneme.views import comm
+from deneme.views import contact
 from django.conf.urls.static import static
 from django.conf import settings
 

@@ -1,4 +1,4 @@
-from .comm import comm
+from .contact import contact
 from .anasayfa import anasayfa
 from .category import category
 from .myarticles import myarticles
