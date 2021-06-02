@@ -70,6 +70,17 @@
   {% else %}
     <p>Login For Make Comment</p>
   {%endif%}
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li
+        ><div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
   {% for comment in comments %}
     <div class="card mt-3 mb-3">

@@ -6,15 +6,17 @@
         </div>
           {%if request.user.is_authenticated %}
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Edit Profile</li>
-              <li class="list-group-item">Change Password</li>
+              <li class="list-group-item"> <a href="{% url 'editProfile'%}">Edit Profile</a> </li>
+              <li class="list-group-item"> <a href="{% url 'changePassword'%}">Change Password</a></li>
               <li class="list-group-item">
                 <a href="{% url 'myarticles' %}">My Articles</a>
               </li>
               <li class="list-group-item">
                 <a href="{% url 'addArticle'%}"> Add Article</a>
               </li>
-              <li class="list-group-item">Log Out</li>
+              <li class="list-group-item">
+                <a href="{% url 'logout'%}">Logout</a>
+              </li>
             </ul>
           {%else%}
             Login Form
