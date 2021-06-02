@@ -17,9 +17,17 @@
               <li class="list-group-item">
                 <a href="{% url 'logout'%}">Logout</a>
               </li>
+              <li class="list-group-item">
+                
+              </li>
             </ul>
           {%else%}
-            Login Form
+            <p>
+              <a href="{% url 'login'%}">Login</a>
+            </p>
+            <p>
+              <a href="{% url 'regis'%}">Sign Up</a>
+            </p>
           {%endif%}
       </div>
 </div> 
