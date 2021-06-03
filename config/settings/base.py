@@ -118,3 +118,31 @@ EMAIL_PORT=587
 EMAIL_HOST_USER= 'gney96@gmail.com'
 EMAIL_HOST_PASSWORD= env('E_P')
 DEFAULT_FROM_EMAIL= 'gney96@gmail.com'
+
+LOGGING={
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters':{
+        'simple_exp':{
+            'format':'{asctime}{levelname}{message}{name}',
+            'style': '{'
+        }
+    },
+    'handlers':{
+        'console':{
+            'class':'logging.StreamHandler'
+        },
+        'file':{
+            'class':'logging.FileHandler',
+            'filename': 'logs/readArticle.log',
+            'formatter': 'simple_exp'
+        }
+    },
+    'loggers':{
+        'read_subject':{
+            'handlers': ['console','file'],
+            'level':'INFO',
+        }
+    }
+
+}

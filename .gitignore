@@ -5,3 +5,4 @@ articles_images
 media
 .env
 prod.sqlite3
+logs

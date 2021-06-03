@@ -4,11 +4,17 @@ from deneme.forms import addCommmentForm
 from django.views import View
 from django.contrib import messages
 
+import logging
+
+logger= logging.getLogger('read_subject')
+
 class Description(View):
     http_method_names=['get','post']
     commentAddForm = addCommmentForm
     def get(self,request,descriptionSlug):
         article=get_object_or_404(articlesModel,slug=descriptionSlug)
+        if request.user.is_authenticated:
+            logger.info(article.title+' konusu '+request.user.username+' tarafından okundu ')
         comments=article.comments.all()
         return render(request, 'pages/description.html', context={
             'article':article,
