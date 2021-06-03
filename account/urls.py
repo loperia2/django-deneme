@@ -1,6 +1,6 @@
 from account.views.changePassword import changePassword
 from django.urls import path
-from account.views import makeLogOut,changePassword,editProfile,regis
+from account.views import makeLogOut,changePassword,editProfile, profile,regis,profileView
 from django.contrib.auth import views as auth_views
 
 urlpatterns=[
@@ -11,6 +11,7 @@ urlpatterns=[
     path('logout',makeLogOut,name='logout'),
     path('changePassword',changePassword, name='changePassword'),
     path('editProfile',editProfile,name='editProfile'),
-    path('regis',regis,name='regis')
+    path('regis',regis,name='regis'),
+    path('profile/<str:username>',profileView.as_view(),name='profile')
 
 ]

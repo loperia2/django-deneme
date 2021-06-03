@@ -3,3 +3,5 @@ __pycache__
 db.sqlite3
 articles_images
 media
+.env
+prod.sqlite3

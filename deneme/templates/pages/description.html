@@ -18,6 +18,7 @@
         <p class="card-text">
           <small class="text-muted">
             {{article.edit_Date|timesince}}
+            <p>Writer: <a href="{% url 'profile' username=article.writer%}"> {{article.writer}}</a> </p> 
           </small>
           <p >
             {%if request.user == article.writer %}

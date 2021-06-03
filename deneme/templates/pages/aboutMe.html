@@ -1,10 +1,10 @@
 {%extends 'base.html'%}
 {% load crispy_forms_tags %}
 
-{% block title %} Contact {% endblock %}
+{% block title %} AboutMe {% endblock %}
 {% block content %}
     
-    <form  method="post">{% csrf_token %}
+    <form action="addArticle" method="post">{% csrf_token %}
         
         {{ form|crispy}}
         

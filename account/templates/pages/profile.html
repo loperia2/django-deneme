@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+{% block title %} {{profile.username}} {% endblock%}
+{% block content%}
+
+    <div class="card">
+        <div class="body">
+            <div class="text">
+                {{profile.get_full_name}}
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}

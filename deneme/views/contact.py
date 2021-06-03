@@ -1,18 +1,15 @@
 from django.shortcuts import redirect, render
 from deneme.forms import ContactForm
 from deneme.models import contactModel
+from django.views.generic import FormView
+from django.core.mail import send_mail
 
-def contact(request):
-    form=ContactForm()
-    print(request.POST)
-    if request.method == 'POST':
-        form= ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('homepage')
-        else:
-            print('no valid')
-    context={
-        'form': form
-    }
-    return render(request,'pages/contact.html', context=context)
+class contactView(FormView):
+    template_name='pages/contact.html'
+    form_class= ContactForm
+    success_url='/email-sent'
+
+    def form_valid(self, form):
+        form.save()
+        form.send_email(msg=form.cleaned_data.get('message'))
+        return super().form_valid(form)
