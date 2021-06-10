@@ -1,0 +1,131 @@
+import DefaultBaseChart from './base'
+import BarStack from './bar_stack'
+import { SeriesType, AxisIteratorType, SerieIteratorType, YAXisOption } from '../../../types'
+import { reverse, isNumber, Dictionary, clone, cloneDeep, get, __, last, concat, first } from 'lodash'
+import PercentageMixin from '../../../mixin/chart/feature/percentage'
+import StackMixin from '../../../mixin/chart/stack'
+import { getAttribute } from 'echarts/types/src/util/model'
+
+class SymmetricalDoubleBar extends DefaultBaseChart {
+  seriesType: SeriesType = 'bar'
+  valueAxes = ['xAxis']
+  categoryAxes = ['yAxis']
+  isYAxisCategory = true
+  isReversedChart = true
+
+  getYAxisInverse (_iteree: AxisIteratorType) {
+    return true
+  }
+
+  getXAxisIterator (): AxisIteratorType[] | any[] {
+    return super.getYAxisIterator()
+  }
+
+  create2DSeries () {
+    const secondDimension = this.dashlet.dimensionsWithDrillDown.lastObject
+  }
+
+  getYAxisIterator (): AxisIteratorType[] | any[] {
+    const axisIterator = cloneDeep(this.axisIterator)
+    const axisIterator2 = cloneDeep(this.axisIterator)
+    const dimensions = this.dashlet.dimensionsWithDrillDown
+    if (dimensions) {
+      const dimension = dimensions[0]
+      const dimension2 = dimensions[1]
+      axisIterator.index = 0
+      axisIterator.id = dimension.id
+      axisIterator.title = dimension.alias
+      axisIterator.isHidden = !this.getXAxisVisibility()
+      axisIterator2.index = 0
+      axisIterator2.id = dimension2.id
+      axisIterator2.title = dimension2.alias
+      axisIterator2.position = 'opposite'
+      axisIterator2.isHidden = !this.getXAxisVisibility()
+
+      return [axisIterator, axisIterator2]
+    }
+  }
+
+  getSerieLabelPosition (value : any) {
+    /* if (value < 0) {
+      return 'left'
+    } else {
+      return 'right'
+    } */
+  }
+
+  get2DSeriaDataLabelPosition (data : any) {
+    return this.getSerieLabelPosition(get(data, 'm0'))
+  }
+
+  formatSerieLabel (serie :any, value :number, percent :any) {
+  }
+
+  get1DSerieDataValue (iteree: SerieIteratorType, datum: object) {
+    return reverse(super.get1DSerieDataValue(iteree, datum))
+  }
+
+  get2DSerieDataValue (iteree: SerieIteratorType, datum: object) {
+    return reverse(super.get2DSerieDataValue(iteree, datum))
+  }
+
+  getXAxisIndex (serieIndex: number, iteree: SerieIteratorType): number | undefined {
+    const axisIndex = super.getAxisIndex('xAxis', iteree)
+    if (isNumber(axisIndex)) {
+      return axisIndex
+    }
+    return serieIndex
+  }
+
+  getYAxisIndex (_serieIndex: number): number | undefined {
+    return undefined
+  }
+
+  getXAxisName (iteree: AxisIteratorType) {
+    if (this.dashlet.show_y_axis_title) {
+      return iteree.title
+    } else {
+      return ''
+    }
+  }
+
+  getYAxisName (iteree: AxisIteratorType) {
+    if (this.dashlet.show_x_axis_title) {
+      return iteree.title
+    } else {
+      return ''
+    }
+  }
+
+  getXAxisMaxAbs () {
+    const data = this.dataConfig.zippedData.map(datum => get(datum, 'm0'))
+    const absoluteData = data.map(value => Math.abs(value))
+    const maximumAbsoluteValue = Math.max(...absoluteData)
+    const roundNumberUpLimit = 3
+    if (maximumAbsoluteValue > roundNumberUpLimit) {
+      return Math.ceil(maximumAbsoluteValue * 1.1)
+    } else {
+      return maximumAbsoluteValue * 1.2
+    }
+  }
+
+  getXAxisMax () {
+    return this.getXAxisMaxAbs()
+  }
+
+  getXAxisMin () {
+    return this.getXAxisMaxAbs() * -1
+  }
+
+  getYAxisMax () {
+    return null
+  }
+
+  get2DSerieDataIterator (iteree: SerieIteratorType): object[] {
+    return super.get2DSerieDataIterator(iteree).filter((datum: Dictionary<any>) => {
+      return isNumber(datum.m0)
+    })
+  }
+}
+
+export default PercentageMixin(SymmetricalDoubleBar)
