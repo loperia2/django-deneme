@@ -32,6 +32,9 @@ class SymmetricalDoubleBar extends DefaultBaseChart {
     if (dimensions) {
       const dimension = dimensions[0]
       const dimension2 = dimensions[1]
+      console.log('keys', this.dataConfig.dimension.keys)
+      console.log('dimension', this.dataConfig.dimension)
+      console.log(dimension2.attributes_for_symmetrical_double_bar)
       axisIterator.index = 0
       axisIterator.id = dimension.id
       axisIterator.title = dimension.alias
@@ -41,7 +44,7 @@ class SymmetricalDoubleBar extends DefaultBaseChart {
       axisIterator2.title = dimension2.alias
       axisIterator2.position = 'opposite'
       axisIterator2.isHidden = !this.getXAxisVisibility()
-
+      console.log(axisIterator2)
       return [axisIterator, axisIterator2]
     }
   }
@@ -62,10 +65,12 @@ class SymmetricalDoubleBar extends DefaultBaseChart {
   }
 
   get1DSerieDataValue (iteree: SerieIteratorType, datum: object) {
+    console.log('denemes')
     return reverse(super.get1DSerieDataValue(iteree, datum))
   }
 
   get2DSerieDataValue (iteree: SerieIteratorType, datum: object) {
+    console.log('2-d', reverse(super.get2DSerieDataValue(iteree, datum)))
     return reverse(super.get2DSerieDataValue(iteree, datum))
   }
 
@@ -99,6 +104,7 @@ class SymmetricalDoubleBar extends DefaultBaseChart {
 
   getXAxisMaxAbs () {
     const data = this.dataConfig.zippedData.map(datum => get(datum, 'm0'))
+    console.log('data', data)
     const absoluteData = data.map(value => Math.abs(value))
     const maximumAbsoluteValue = Math.max(...absoluteData)
     const roundNumberUpLimit = 3
@@ -122,8 +128,21 @@ class SymmetricalDoubleBar extends DefaultBaseChart {
   }
 
   get2DSerieDataIterator (iteree: SerieIteratorType): object[] {
-    return super.get2DSerieDataIterator(iteree).filter((datum: Dictionary<any>) => {
+    /* return super.get2DSerieDataIterator(iteree).filter((datum: Dictionary<any>) => {
+      console.log('datum', datum)
+      if (datum.state === 'canceled') {
+        datum.m0 = datum.m0 * -1
+      }
       return isNumber(datum.m0)
+    }) */
+    const dimensions = this.dashlet.dimensionsWithDrillDown
+    const secondDimension = last(dimensions)
+    const secondDimensionKey = last(this.dataConfig.dimension.keys)
+    return this.dataConfig.zippedData.filter((datum) => {
+      if (datum[secondDimensionKey] === 'state') {
+        datum.m0 = datum.m0 * -1
+      }
+      return get(datum, iteree.key) === iteree.title
     })
   }
 }
