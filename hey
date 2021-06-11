@@ -128,22 +128,29 @@ class SymmetricalDoubleBar extends DefaultBaseChart {
   }
 
   get2DSerieDataIterator (iteree: SerieIteratorType): object[] {
-    /* return super.get2DSerieDataIterator(iteree).filter((datum: Dictionary<any>) => {
+    return super.get2DSerieDataIterator(iteree).filter((datum: Dictionary<any>) => {
+      const dimensions = this.dashlet.dimensionsWithDrillDown
+      const secondDimension = last(dimensions)
+      console.log('17,20', secondDimension)
+      const secondDimensionKey = last(this.dataConfig.dimension.keys)
       console.log('datum', datum)
-      if (datum.state === 'canceled') {
+      if (datum[secondDimensionKey] === 'canceled') {
         datum.m0 = datum.m0 * -1
       }
       return isNumber(datum.m0)
-    }) */
-    const dimensions = this.dashlet.dimensionsWithDrillDown
+    })
+    /* const dimensions = this.dashlet.dimensionsWithDrillDown
     const secondDimension = last(dimensions)
     const secondDimensionKey = last(this.dataConfig.dimension.keys)
+    console.log('16.55', secondDimensionKey)
     return this.dataConfig.zippedData.filter((datum) => {
-      if (datum[secondDimensionKey] === 'state') {
+      console.log('17.00', datum[secondDimensionKey])
+      console.log('datums', datum.m0)
+      if (datum[secondDimensionKey] === 'canceled') {
         datum.m0 = datum.m0 * -1
       }
-      return get(datum, iteree.key) === iteree.title
-    })
+      return get(datum.m0, iteree.key) === iteree.title
+    }) */
   }
 }
 
